@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Lint with ruff
+        run: |
+          ruff check specheck/ tests/
+
+      - name: Run unit tests
+        run: |
+          pytest tests/ -v --tb=short --junitxml=test-results.xml
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-py${{ matrix.python-version }}
+          path: test-results.xml
+
+      # Demonstrate SpecCheck itself (requires a running API server)
+      # Uncomment the following steps when you have a test server:
+      #
+      # - name: Start test API server
+      #   run: |
+      #     python examples/server.py &
+      #     sleep 2
+      #
+      # - name: Run SpecCheck contract tests
+      #   run: |
+      #     specheck --spec examples/petstore.yaml --base-url http://localhost:8000 --output specheck-report.xml -v
+      #
+      # - name: Upload SpecCheck report
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: specheck-report-py${{ matrix.python-version }}
+      #     path: specheck-report.xml
