@@ -7,7 +7,6 @@ Detects **contract drift** by comparing:
 
 from __future__ import annotations
 
-import re
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any
@@ -17,7 +16,6 @@ import jsonschema
 
 from specheck.case_generator import CaseCategory, TestCase
 from specheck.spec_parser import EndpointSpec, ParsedSpec
-
 
 # ---------------------------------------------------------------------------
 # Data model

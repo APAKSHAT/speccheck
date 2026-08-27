@@ -10,7 +10,6 @@ from typing import Any
 import yaml
 from openapi_spec_validator import validate
 
-
 # ---------------------------------------------------------------------------
 # Internal data model
 # ---------------------------------------------------------------------------
@@ -32,7 +31,7 @@ class FieldSchema:
     max_length: int | None = None
     pattern: str | None = None
     items: dict[str, Any] | None = None  # for arrays
-    properties: dict[str, "FieldSchema"] | None = None  # for nested objects
+    properties: dict[str, FieldSchema] | None = None  # for nested objects
 
 
 @dataclass

@@ -12,13 +12,11 @@ from __future__ import annotations
 
 import copy
 import math
-import string
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any
 
 from specheck.spec_parser import EndpointSpec, FieldSchema, ParsedSpec
-
 
 # ---------------------------------------------------------------------------
 # Data model
@@ -151,7 +149,10 @@ def _wrong_type_cases(endpoint: EndpointSpec, valid_body: dict[str, Any]) -> lis
                 endpoint=endpoint.path,
                 method=endpoint.method,
                 category=CaseCategory.WRONG_TYPE,
-                description=f"Wrong type for '{field_name}': sent {type(wrong_val).__name__} instead of {fs.type}",
+                description=(
+                    f"Wrong type for '{field_name}': sent "
+                    f"{type(wrong_val).__name__} instead of {fs.type}"
+                ),
                 body=mutated,
                 expected_status_codes=[400, 422],
             )
@@ -174,7 +175,10 @@ def _boundary_cases(endpoint: EndpointSpec, valid_body: dict[str, Any]) -> list[
                         endpoint=endpoint.path,
                         method=endpoint.method,
                         category=CaseCategory.BOUNDARY,
-                        description=f"Below minLength for '{field_name}' (sent {fs.min_length - 1}, min {fs.min_length})",
+                        description=(
+                            f"Below minLength for '{field_name}' "
+                            f"(sent {fs.min_length - 1}, min {fs.min_length})"
+                        ),
                         body=mutated,
                         expected_status_codes=[400, 422],
                     )
@@ -187,7 +191,10 @@ def _boundary_cases(endpoint: EndpointSpec, valid_body: dict[str, Any]) -> list[
                         endpoint=endpoint.path,
                         method=endpoint.method,
                         category=CaseCategory.BOUNDARY,
-                        description=f"Above maxLength for '{field_name}' (sent {fs.max_length + 1}, max {fs.max_length})",
+                        description=(
+                            f"Above maxLength for '{field_name}' "
+                            f"(sent {fs.max_length + 1}, max {fs.max_length})"
+                        ),
                         body=mutated,
                         expected_status_codes=[400, 422],
                     )
@@ -204,7 +211,10 @@ def _boundary_cases(endpoint: EndpointSpec, valid_body: dict[str, Any]) -> list[
                         endpoint=endpoint.path,
                         method=endpoint.method,
                         category=CaseCategory.BOUNDARY,
-                        description=f"Below minimum for '{field_name}' (sent {mutated[field_name]}, min {fs.minimum})",
+                        description=(
+                            f"Below minimum for '{field_name}' "
+                            f"(sent {mutated[field_name]}, min {fs.minimum})"
+                        ),
                         body=mutated,
                         expected_status_codes=[400, 422],
                     )
@@ -218,7 +228,10 @@ def _boundary_cases(endpoint: EndpointSpec, valid_body: dict[str, Any]) -> list[
                         endpoint=endpoint.path,
                         method=endpoint.method,
                         category=CaseCategory.BOUNDARY,
-                        description=f"Above maximum for '{field_name}' (sent {mutated[field_name]}, max {fs.maximum})",
+                        description=(
+                            f"Above maximum for '{field_name}' "
+                            f"(sent {mutated[field_name]}, max {fs.maximum})"
+                        ),
                         body=mutated,
                         expected_status_codes=[400, 422],
                     )
