@@ -145,12 +145,20 @@ class TestBoundaryCases:
 
     def test_below_min_length(self, post_cases):
         boundary = [c for c in post_cases if c.category == CaseCategory.BOUNDARY]
-        min_len_cases = [c for c in boundary if "minLength" in c.description.lower() or "below minlength" in c.description.lower()]
+        min_len_cases = [
+            c for c in boundary
+            if "minLength" in c.description.lower()
+            or "below minlength" in c.description.lower()
+        ]
         assert len(min_len_cases) >= 1
 
     def test_above_max_length(self, post_cases):
         boundary = [c for c in post_cases if c.category == CaseCategory.BOUNDARY]
-        max_cases = [c for c in boundary if "maxlength" in c.description.lower() or "above maxlength" in c.description.lower()]
+        max_cases = [
+            c for c in boundary
+            if "maxlength" in c.description.lower()
+            or "above maxlength" in c.description.lower()
+        ]
         assert len(max_cases) >= 1
 
     def test_below_minimum_number(self, post_cases):

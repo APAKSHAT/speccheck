@@ -3,14 +3,12 @@
 from __future__ import annotations
 
 import xml.etree.ElementTree as ET
-from pathlib import Path
 
 import pytest
 
 from specheck.case_generator import CaseCategory, TestCase
 from specheck.reporter import print_summary, results_to_junit, write_report
 from specheck.validator import DriftDetail, DriftType, ValidationResult
-
 
 # ---------------------------------------------------------------------------
 # Fixtures

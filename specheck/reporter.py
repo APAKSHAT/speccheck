@@ -15,7 +15,6 @@ from junit_xml import TestSuite
 
 from specheck.validator import ValidationResult
 
-
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------

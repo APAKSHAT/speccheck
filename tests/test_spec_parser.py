@@ -7,7 +7,6 @@ from pathlib import Path
 import pytest
 
 from specheck.spec_parser import (
-    EndpointSpec,
     FieldSchema,
     ParsedSpec,
     load_spec,
